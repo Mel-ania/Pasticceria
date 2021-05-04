@@ -1,0 +1,37 @@
+{% extends "layout.html" %}
+
+{% block content %}
+{% from "formHelper.html" import render_field %}
+
+<div class="jumbotron">
+    <h1>Ai 4 cioccolati</h1>
+    <p class="lead">
+        Cosa hai preparato di buono?
+    </p>
+</div>
+
+<form action="" method="post">
+    <p>
+        {{form.name.label}} <br />
+        {{form.name(size=30)}} <br />
+    </p>
+    <p>
+        {{form.price.label}} <br />
+        {{form.price(size=30)}} € <br />
+    </p>
+    <p>
+        {{form.availability.label}} <br />
+        {{form.availability(size=30)}} <br />
+    </p>
+    <p class="loop">
+        {% for field in form.ingredients %}
+        {{field.label}} <br />
+        {{field(size=30)}} <br />
+        {% endfor %}
+    </p>
+    <p>
+        {{form.add}} <br />
+    </p>
+</form>
+
+{% endblock %}

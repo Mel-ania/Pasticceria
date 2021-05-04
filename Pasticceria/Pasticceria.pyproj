@@ -28,6 +28,9 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Pasticceria\forms.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="runserver.py" />
     <Compile Include="Pasticceria\__init__.py" />
     <Compile Include="Pasticceria\views.py" />
@@ -41,6 +44,10 @@
     <Folder Include="Pasticceria\templates\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Pasticceria\templates\addCake.html" />
+    <Content Include="Pasticceria\templates\backoffice.html" />
+    <Content Include="Pasticceria\templates\formHelper.html" />
+    <Content Include="Pasticceria\templates\signIn.html" />
     <Content Include="requirements.txt" />
     <Content Include="Pasticceria\static\content\bootstrap.css" />
     <Content Include="Pasticceria\static\content\bootstrap.min.css" />

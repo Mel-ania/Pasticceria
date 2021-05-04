@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <h2>Accedi</h2>
+    <p class="lead">Per entrare nell'area di backoffice devi accedere con il tuo account.</p>
+</div>
+
+<form action="" method="post">
+    <p>
+        {{form.email.label}} <br />
+        {{form.email(size=30)}} <br />
+    </p>
+    <p>
+        {{form.password.label}} <br />
+        {{form.password(size=30)}} <br />
+    </p>
+    <p>
+        {{form.submit()}}
+    </p>
+</form>
+
+{% endblock %}

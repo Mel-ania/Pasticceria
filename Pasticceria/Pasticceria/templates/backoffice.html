@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<div class="jumbotron">
+    <h1>Ai 4 cioccolati</h1>
+    <p class="lead">
+        Ciao, {{ name }}!<br />
+        Cosa hai preparato e venduto oggi?
+    </p>
+</div>
+
+<div>
+    <p>
+        Hai preparato nuove torte?
+        <a class="btn btn-default" href="{{ url_for('addCake') }}">Aggiungile &raquo;</a>
+        Visualizzare tutte le torte qui. Si puo aggiungere e togliere.
+        {%for c in cakes%}
+        <ul class="list-group">
+            <li class="list-group-item">
+                {{ c }}
+            </li>
+        </ul>
+        {% endfor %}
+    </p>
+</div>
+
+{% endblock %}
