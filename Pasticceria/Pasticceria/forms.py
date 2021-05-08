@@ -10,11 +10,11 @@ class SignInForm(FlaskForm):
 class IngredientForm(FlaskForm):
     name = StringField('Ingrediente')
     quantity = IntegerField('Quantità')
-    unit = SelectField('Unità di misura', choices=[('g', 'grammi'),
-                                                   ('kg', 'chilogrammi'),
-                                                   ('l', 'litri'),
-                                                   ('n', 'unità'),
-                                                   ('qb','quanto basta')
+    unit = SelectField('Unità di misura', choices=[('grammi', 'grammi'),
+                                                   ('chilogrammi', 'chilogrammi'),
+                                                   ('litri', 'litri'),
+                                                   ('unità', 'unità'),
+                                                   ('quanto basta','quanto basta')
                                                   ])
 
 class AddCakeForm(FlaskForm):

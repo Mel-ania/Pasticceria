@@ -1,8 +1,15 @@
 {% extends "layout.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block head %}
+<style>
+    legend {
+        color: white;
+    }
+</style>
+{% endblock %}
 
 {% block content %}
-{% from "formHelper.html" import render_field %}
-
 <div class="jumbotron">
     <h1>Ai 4 cioccolati</h1>
     <p class="lead">
@@ -10,28 +17,21 @@
     </p>
 </div>
 
-<form action="" method="post">
-    <p>
-        {{form.name.label}} <br />
-        {{form.name(size=30)}} <br />
-    </p>
-    <p>
-        {{form.price.label}} <br />
-        {{form.price(size=30)}} € <br />
-    </p>
-    <p>
-        {{form.availability.label}} <br />
-        {{form.availability(size=30)}} <br />
-    </p>
-    <p class="loop">
-        {% for field in form.ingredients %}
-        {{field.label}} <br />
-        {{field(size=30)}} <br />
-        {% endfor %}
-    </p>
-    <p>
-        {{form.add}} <br />
-    </p>
-</form>
+<form class="form form-horizontal" action="" method="post">
 
+    {{wtf.form_field(form.name, form_type="horizontal")}}
+    {{wtf.form_field(form.price, form_type="horizontal")}}
+    {{wtf.form_field(form.availability, form_type="horizontal")}}
+
+    <div id="field-list-forms">
+        {% for field in form.ingredients %}
+        {{wtf.form_field(field, form_type="horizontal")}}
+        {% endfor %}
+    </div>
+
+    <button id="add-new-field">+++</button>
+
+    {{wtf.form_field(form.add, form_type="horizontal", button_map={'add': 'warning'})}}
+
+</form>
 {% endblock %}

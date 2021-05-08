@@ -4,11 +4,14 @@ Routes and views for the flask application.
 
 from datetime import datetime
 from flask import render_template, url_for, request, flash, session, redirect
+from flask_bootstrap import Bootstrap
 from Pasticceria import app
 from Pasticceria.forms import SignInForm, AddCakeForm, IngredientForm
 import pyrebase
+import json
 
 app.config['SECRET_KEY'] = 'ai4cioccolati'
+app.debug = True
 
 config = {
     "apiKey": "AIzaSyAhNhNVjG475NUV13qcUlzGuiK51eSbdbM",
@@ -22,11 +25,14 @@ config = {
 }
 
 firebase = pyrebase.initialize_app(config)
+bootstrap = Bootstrap(app)
 db = firebase.database()
 auth = firebase.auth()
+today = datetime.today().strftime('%Y-%m-%d')
+
 user = {
-    'id':'',
-    'name':'',
+    'id':'jkui78',
+    'name':'pippo',
     'email':'',
     'password':''
     }
@@ -37,16 +43,28 @@ def reset_user():
     user['id'] = ''
     user['name'] = ''
 
+def days_between(d1, d2):
+    d1 = datetime.strptime(d1, "%Y-%m-%d")
+    d2 = datetime.strptime(d2, "%Y-%m-%d")
+    return abs((d2 - d1).days)
+
+def is_logged():
+    if user['id'] != '':
+        return 'true'
+    return 'false'
+
 @app.route('/')
 @app.route('/home')
 def home():
     """Renders the home page."""
-    cakes = db.child("Cakes").get()
+    cakes = db.child("Cakes").get().val()
     return render_template(
         'index.html',
         title='Home',
         year=datetime.now().year,
-        cakes=cakes.val()
+        is_logged=is_logged(),
+        day=today,
+        cakes=cakes
     )
 
 @app.route('/contact')
@@ -56,22 +74,12 @@ def contact():
         'contact.html',
         title='Contact',
         year=datetime.now().year,
+        is_logged=is_logged(),
         message='Contattaci per i tuoi ordini.'
-    )
-
-@app.route('/about')
-def about():
-    """Renders the about page."""
-    return render_template(
-        'about.html',
-        title='About',
-        year=datetime.now().year,
-        message='Qualcosa su di noi.'
     )
 
 @app.route('/signIn', methods=['GET', 'POST'])
 def signIn():
-    """Renders the sign in page."""
     form = SignInForm()
     if form.is_submitted():
         result = request.form
@@ -86,41 +94,60 @@ def signIn():
         except:
             reset_user()
             flash("Errore durante l'accesso", 'error')
+
+    """Renders the sign in page."""
     return render_template(
         'signIn.html',
         title='Accedi',
         year=datetime.now().year,
+        is_logged=is_logged(),
         form=form
     )
 
 @app.route('/signOut', methods=['GET', 'POST'])
 def signOut():
-    """Renders the sign out page."""
     reset_user()
-    flash('Sei uscita con successo!')
+    flash('Sei uscito con successo!')
+    """Renders the sign out page."""
     return redirect(url_for('home'))
 
 @app.route('/backoffice', methods=['GET', 'POST'])
 def backoffice():
-    if user['id'] == '':
+    if not is_logged():
         return redirect(url_for('home'))
     else:
+        if request.method == 'POST':
+            new = request.json
+            if new:
+                for n in new:
+                    x = new[n]
+                    if x['Availability'] == 0:
+                        db.child("Cakes").child(n).remove()
+                    else:
+                        db.child("Cakes").child(n).update(x)
+                return json.dumps({'success': True}), 200, {'ContentType': 'application/json'}
+        cakes = db.child("Cakes").get().val()
+        for ck in cakes:
+            c = cakes[ck]
+            if days_between(today, c['Day']) > 2:
+                db.child("Cakes").child(ck).remove()
+
         """Renders the backoffice page."""
-        cakes = db.child("Cakes").get()
         return render_template(
             'backoffice.html',
             name=user['name'],
             title='Backoffice',
             year=datetime.now().year,
-            cakes=cakes.val()
-    )
+            is_logged=is_logged(),
+            day=today,
+            cakes=cakes
+        )
 
 @app.route('/addCake', methods=['GET', 'POST'])
 def addCake():
-    if user['id'] == '':
+    if not is_logged():
         redirect(url_for('home'))
     else:
-        """Renders the add-a-cake page."""
         form = AddCakeForm()
         if form.is_submitted():
             result = request.form
@@ -133,7 +160,8 @@ def addCake():
 
             r = {
                 "Price" : price,
-                "Availability" : availability
+                "Availability" : availability,
+                "Day" : today
                 }
             db.child('Cakes').child(cake.capitalize()).update(r)
             s = {}
@@ -144,10 +172,12 @@ def addCake():
                     }
             db.child('Cakes').child(cake.capitalize()).child('Ingredients').update(s)
             return redirect(url_for('backoffice'))
-
+        
+        """Renders the add-a-cake page."""
         return render_template(
             'addCake.html',
             title='Backoffice',
             year=datetime.now().year,
+            is_logged=is_logged(),
             form=form
         )

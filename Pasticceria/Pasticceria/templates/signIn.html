@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
 
 {% block content %}
 
@@ -7,18 +8,8 @@
     <p class="lead">Per entrare nell'area di backoffice devi accedere con il tuo account.</p>
 </div>
 
-<form action="" method="post">
-    <p>
-        {{form.email.label}} <br />
-        {{form.email(size=30)}} <br />
-    </p>
-    <p>
-        {{form.password.label}} <br />
-        {{form.password(size=30)}} <br />
-    </p>
-    <p>
-        {{form.submit()}}
-    </p>
+<form class="form form-horizontal" action="" method="post">
+    {{wtf.quick_form(form, form_type="horizontal", button_map={'submit': 'success'})}}
 </form>
 
 {% endblock %}

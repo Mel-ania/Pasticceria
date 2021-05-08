@@ -1,4 +1,8 @@
-{% extends "layout.html" %}
+﻿{% extends "layout.html" %}
+
+{% block head %}
+<link rel="stylesheet" type="text/css" href="/static/content/cakesView.css" />
+{% endblock %}
 
 {% block content %}
 
@@ -6,14 +10,15 @@
     <h1>Ai 4 cioccolati</h1>
 </div>
 
-<div class="row">
-    {%for c in cakes%}
-        <ul class="list-group">
-            <li class="list-group-item">
-                {{ c }}
-            </li>
-        </ul>
-    {% endfor %}
-</div>
+<div id="cakesList" class="grid"></div>
 
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/scripts/cakes.js"></script>
+<script>
+    var myCakes = {{ cakes|tojson }};
+    var day = {{ day|tojson }};
+    displayPopup(myCakes);
+</script>
 {% endblock %}

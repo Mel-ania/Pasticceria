@@ -1,5 +1,9 @@
 {% extends "layout.html" %}
 
+{% block head %}
+<link rel="stylesheet" type="text/css" href="/static/content/cakesView.css" />
+{% endblock %}
+
 {% block content %}
 
 <div class="jumbotron">
@@ -10,19 +14,51 @@
     </p>
 </div>
 
-<div>
+<div class="new-cakes-adding">
     <p>
-        Hai preparato nuove torte?
-        <a class="btn btn-default" href="{{ url_for('addCake') }}">Aggiungile &raquo;</a>
-        Visualizzare tutte le torte qui. Si puo aggiungere e togliere.
-        {%for c in cakes%}
-        <ul class="list-group">
-            <li class="list-group-item">
-                {{ c }}
-            </li>
-        </ul>
-        {% endfor %}
+        Hai preparato nuove torte?<br/><br />
+        <a class="btn btn-default" href="{{ url_for('addCake') }}">Aggiungile &raquo;</a><br/><br />
     </p>
 </div>
 
+<div id="cakesList" class="grid"></div>
+
+<div class="ml-auto">
+    <br/>
+    <form method="post" role="form">
+        <button class="btn btn-warning" name="submit" id="submit">Aggiorna &raquo;</button>
+    </form>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/scripts/cakes.js"></script>
+<script src="/static/scripts/cakemodify.js"></script>
+<script>
+    var myCakes = {{ cakes|tojson }};
+    var day = {{ day|tojson }};
+    displayPopup(myCakes);
+    var newCakes = pop(myCakes);
+    $("#newCakes").attr("value", newCakes);
+
+    $(document).ready(function () {
+        $('#submit').click(function () {
+            $.ajax({
+                type: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(newCakes),
+                dataType: 'json',
+                url: "{{url_for('backoffice')}}",
+                success: function (e) {
+                    console.log("send");
+                    window.location = "{{url_for('backoffice')}}";
+                },
+                error: function (error) {
+                    console.log("sad :(");
+                }
+            });
+        });
+    });
+</script>
 {% endblock %}

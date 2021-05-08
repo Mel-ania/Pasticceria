@@ -4,9 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ title }} | Ai 4 cioccolati</title>
+    <link rel="icon" type="image/png" href="https://img.icons8.com/cotton/2x/cake.png">
     <link rel="stylesheet" type="text/css" href="/static/content/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="/static/content/site.css" />
     <script src="/static/scripts/modernizr-2.6.2.js"></script>
+    {% block head %}{% endblock %}
 </head>
 
 <body>
@@ -21,13 +23,14 @@
                 <a href="/" class="navbar-brand">Ai 4 cioccolati</a>
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav navbar-left">
                     <li><a href="{{ url_for('home') }}">Home</a></li>
-                    <li><a href="{{ url_for('about') }}">About</a></li>
                     <li><a href="{{ url_for('contact') }}">Contatti</a></li>
-                    <li><a href="{{ url_for('backoffice') }}">Backoffice</a></li>
-                    <li><a href="{{ url_for('signIn') }}">Accedi</a></li>
-                    <li><a href="{{ url_for('signOut') }}">Esci</a></li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li id="nav-backoffice"><a href="{{ url_for('backoffice') }}">Backoffice</a></li>
+                    <li id="nav-signin"><a href="{{ url_for('signIn') }}">Accedi</a></li>
+                    <li id="nav-signout"><a href="{{ url_for('signOut') }}">Esci</a></li>
                 </ul>
             </div>
         </div>
@@ -40,20 +43,36 @@
             <p>&copy; {{ year }} - Ai 4 cioccolati</p>
         </footer>
     </div>
+    
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    <ul>
+        {% for category, message in messages %}
+        <li class="alert alert-{{ category }} my-2 my-lg-0 ml-5">{{ category }} : {{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endwith %}
 
     <script src="/static/scripts/jquery-1.10.2.js"></script>
     <script src="/static/scripts/bootstrap.js"></script>
     <script src="/static/scripts/respond.js"></script>
-    {% block scripts %}{% endblock %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.11.1/moment.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script>
+        $('.alert').each(function (index, element) {
+            alert($(element).html());
+            this.remove(this);
+        });
+        if ({{ is_logged }} == true) {
+            $('#nav-backoffice').removeClass('disabled');
+            $('#nav-signin').hide();
+            $('#nav-signout').show();
+        } else {
+            $('#nav-backoffice').addClass('disabled');
+            $('#nav-signin').show();
+            $('#nav-signout').hide();
+        }
+    </script>
 
+    {% block scripts %}{% endblock %}
 </body>
-{% with messages = get_flashed_messages() %}
-  {% if messages %}
-    <ul class=flashes>
-        {% for message in messages %}
-        <li>{{ message }}</li>
-        {% endfor %}
-    </ul>
-  {% endif %}
-{% endwith %}
 </html>

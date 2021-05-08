@@ -44,9 +44,13 @@
     <Folder Include="Pasticceria\templates\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Pasticceria\static\content\cakesView.css" />
+    <Content Include="Pasticceria\static\content\forms.css" />
+    <Content Include="Pasticceria\static\scripts\cakemodify.js" />
+    <Content Include="Pasticceria\static\scripts\cakes.js" />
+    <Content Include="Pasticceria\static\scripts\cakesadd.js" />
     <Content Include="Pasticceria\templates\addCake.html" />
     <Content Include="Pasticceria\templates\backoffice.html" />
-    <Content Include="Pasticceria\templates\formHelper.html" />
     <Content Include="Pasticceria\templates\signIn.html" />
     <Content Include="requirements.txt" />
     <Content Include="Pasticceria\static\content\bootstrap.css" />
@@ -71,7 +75,6 @@
     <Content Include="Pasticceria\static\scripts\respond.js" />
     <Content Include="Pasticceria\static\scripts\respond.min.js" />
     <Content Include="Pasticceria\static\scripts\_references.js" />
-    <Content Include="Pasticceria\templates\about.html" />
     <Content Include="Pasticceria\templates\contact.html" />
     <Content Include="Pasticceria\templates\index.html" />
     <Content Include="Pasticceria\templates\layout.html" />
