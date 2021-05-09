@@ -31,8 +31,8 @@ auth = firebase.auth()
 today = datetime.today().strftime('%Y-%m-%d')
 
 user = {
-    'id':'jkui78',
-    'name':'pippo',
+    'id':'',
+    'name':'',
     'email':'',
     'password':''
     }
@@ -148,30 +148,35 @@ def addCake():
     if not is_logged():
         redirect(url_for('home'))
     else:
+        scroll = 'top-navbar'
         form = AddCakeForm()
         if form.is_submitted():
             result = request.form
-            cake = result['name']
-            price = result['price']
-            availability = result['availability']
-            ingredients=[]
-            for f in form.ingredients:
-                ingredients.append(f)
+            if request.form.get("AddField", False):
+                form.ingredients.append_entry()
+                scroll = 'add-new-field'
+            else:
+                cake = result['name']
+                price = result['price']
+                availability = result['availability']
+                ingredients=[]
+                for f in form.ingredients:
+                    ingredients.append(f)
 
-            r = {
-                "Price" : price,
-                "Availability" : availability,
-                "Day" : today
-                }
-            db.child('Cakes').child(cake.capitalize()).update(r)
-            s = {}
-            for i in ingredients:
-                s[(i['name'].data).capitalize()] = {
-                    "Quantity" : i['quantity'].data,
-                    "Unit" : i['unit'].data
+                r = {
+                    "Price" : price,
+                    "Availability" : availability,
+                    "Day" : today
                     }
-            db.child('Cakes').child(cake.capitalize()).child('Ingredients').update(s)
-            return redirect(url_for('backoffice'))
+                db.child('Cakes').child(cake.capitalize()).update(r)
+                s = {}
+                for i in ingredients:
+                    s[(i['name'].data).capitalize()] = {
+                        "Quantity" : i['quantity'].data,
+                        "Unit" : i['unit'].data
+                        }
+                db.child('Cakes').child(cake.capitalize()).child('Ingredients').update(s)
+                return redirect(url_for('backoffice'))
         
         """Renders the add-a-cake page."""
         return render_template(
@@ -179,5 +184,6 @@ def addCake():
             title='Backoffice',
             year=datetime.now().year,
             is_logged=is_logged(),
-            form=form
+            form=form,
+            scroll=scroll
         )

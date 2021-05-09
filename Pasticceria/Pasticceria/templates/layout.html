@@ -7,12 +7,25 @@
     <link rel="icon" type="image/png" href="https://img.icons8.com/cotton/2x/cake.png">
     <link rel="stylesheet" type="text/css" href="/static/content/bootstrap.min.css" />
     <link rel="stylesheet" type="text/css" href="/static/content/site.css" />
+    <link rel="stylesheet" href="https://use.typekit.net/sqb2ats.css">
     <script src="/static/scripts/modernizr-2.6.2.js"></script>
     {% block head %}{% endblock %}
+    <style>
+        .jumbotron {
+            background-image: linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.4)),
+                url("https://cdn.pixabay.com/photo/2019/04/19/17/48/cake-balls-4139982_1280.jpg");
+        }
+
+        .brand {
+            font-family: olicana-smooth,sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
+    <div id ="top-navbar" class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">

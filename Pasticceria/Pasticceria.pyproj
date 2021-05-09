@@ -48,7 +48,6 @@
     <Content Include="Pasticceria\static\content\forms.css" />
     <Content Include="Pasticceria\static\scripts\cakemodify.js" />
     <Content Include="Pasticceria\static\scripts\cakes.js" />
-    <Content Include="Pasticceria\static\scripts\cakesadd.js" />
     <Content Include="Pasticceria\templates\addCake.html" />
     <Content Include="Pasticceria\templates\backoffice.html" />
     <Content Include="Pasticceria\templates\signIn.html" />

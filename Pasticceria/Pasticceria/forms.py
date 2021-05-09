@@ -9,7 +9,7 @@ class SignInForm(FlaskForm):
 
 class IngredientForm(FlaskForm):
     name = StringField('Ingrediente')
-    quantity = IntegerField('Quantità')
+    quantity = FloatField('Quantità')
     unit = SelectField('Unità di misura', choices=[('grammi', 'grammi'),
                                                    ('chilogrammi', 'chilogrammi'),
                                                    ('litri', 'litri'),

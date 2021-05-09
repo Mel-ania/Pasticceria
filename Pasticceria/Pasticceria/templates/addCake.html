@@ -11,13 +11,16 @@
 
 {% block content %}
 <div class="jumbotron">
-    <h1>Ai 4 cioccolati</h1>
+    <h1 class="brand">Ai 4 cioccolati</h1>
     <p class="lead">
         Cosa hai preparato di buono?
     </p>
 </div>
 
 <form class="form form-horizontal" action="" method="post">
+    {% for field, errors in form.errors.items() %}
+    {{ ', '.join(errors) }}
+    {% endfor %}
 
     {{wtf.form_field(form.name, form_type="horizontal")}}
     {{wtf.form_field(form.price, form_type="horizontal")}}
@@ -27,11 +30,17 @@
         {% for field in form.ingredients %}
         {{wtf.form_field(field, form_type="horizontal")}}
         {% endfor %}
+        <br />
+        <input id="add-new-field" class="btn btn-default col-lg-offset-2 col-lg-10" type="submit" name="AddField" value="Aggiungi ingrediente" />
+        <br/><br/><hr />
     </div>
 
-    <button id="add-new-field">+++</button>
-
     {{wtf.form_field(form.add, form_type="horizontal", button_map={'add': 'warning'})}}
-
 </form>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.getElementById('{{ scroll }}').scrollIntoView();
+</script>
 {% endblock %}
