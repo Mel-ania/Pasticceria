@@ -42,11 +42,12 @@
 <script src="/static/scripts/cakes.js"></script>
 <script src="/static/scripts/cakemodify.js"></script>
 <script>
-    var myCakes = {{ cakes|tojson }};
+    var myCakes = {{ cakes| tojson }};
     var day = {{ day|tojson }};
     displayPopup(myCakes);
-    var newCakes = pop(myCakes);
-    $("#newCakes").attr("value", newCakes);
+    var newCakes = myCakes;
+    //$().click();
+    pop(newCakes);
 
     $(document).ready(function () {
         $('#submit').click(function () {

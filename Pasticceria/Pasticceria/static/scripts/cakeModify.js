@@ -1,9 +1,5 @@
-function togglePopup(x) {
-    $('#popup-' + x).toggleClass("active");
-}
-
 function pop(myCakes) {
-    var newCakes = myCakes;
+    newCakes = myCakes;
 
     var show = $('.showcase');
     var btnAdd = '<button class="btn btn-add">+</button>';
@@ -11,7 +7,7 @@ function pop(myCakes) {
 
     var pop1 = '<div class="popup" id="popup-'
     var pop2 = '"><div class="content"><div class="close-btn">x</div><div class="btn-container"><h1>';
-    var pop3 = '</div ></div ></div > ';
+    var pop3 = '</div></div></div> ';
 
     show.each(function (index, element) {
         var idName = $(element).attr('id');
@@ -50,13 +46,7 @@ function pop(myCakes) {
             }
         }
         bc[0].onclick = function (e) {
-            console.log("click");
             $('#popup-' + idName).removeClass("active");
-            console.log("fatto?");
         }
     });
-
-    
-
-    return newCakes;
 }
