@@ -14,14 +14,14 @@ app.config['SECRET_KEY'] = 'ai4cioccolati'
 app.debug = True
 
 config = {
-    "apiKey": "AIzaSyAhNhNVjG475NUV13qcUlzGuiK51eSbdbM",
-    "authDomain": "pasticceria-b7f01.firebaseapp.com",
-    "databaseURL": "https://pasticceria-b7f01-default-rtdb.europe-west1.firebasedatabase.app",
-    "projectId": "pasticceria-b7f01",
-    "storageBucket": "pasticceria-b7f01.appspot.com",
-    "messagingSenderId": "1079999197910",
-    "appId": "1:1079999197910:web:a923704d223639af9b8f77",
-    "measurementId": "G-CHL8888R9S"
+    "apiKey": "",
+    "authDomain": "",
+    "databaseURL": "",
+    "projectId": "",
+    "storageBucket": "",
+    "messagingSenderId": "",
+    "appId": "",
+    "measurementId": ""
 }
 
 firebase = pyrebase.initialize_app(config)
