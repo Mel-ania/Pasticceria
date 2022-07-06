@@ -1,6 +1,6 @@
 # Pasticceria - Ai 4 cioccolati
 
-The content is in italian, everything else is in english.
+<sub>The website content is in Italian, everything else is in English.</sub>
 
 This is a simple website for a bakery that wants its own showcase open to everyone.
 
